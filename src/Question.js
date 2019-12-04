@@ -1,29 +1,20 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 export default (props) => {
-    let { ques, ind, changeFunction, checked } = props
-    useEffect(() => {
-        let inputGroup = document.querySelector(`input[name="question${ind}"]:checked`)
-        if (inputGroup) {
+    let { ques, ind, checked, handleChange } = props
 
-            inputGroup.checked = false
-        }
-        if (checked) {
-            document.querySelectorAll(`input[name="question${ind}"]`)[checked].checked = true
-        }
-    }, [ind, checked])
     return (
         <>
             <h3>{ques.question}</h3>
-            <form id={`ques${ind}`} onChange={changeFunction}>
+            <form>
                 {
                     ques.options.map((opt, i) => {
                         return (
-                            <div key={i}>
-                                <input type="radio" value={opt} name={`question${ind}`} data-index={i} id={`ans${i + 1}q${ind + 1}`} />
+                            <React.Fragment key={i}>
+                                <input type="radio" value={opt} name={`question${ind}`} id={`ans${i + 1}q${ind + 1}`} checked={checked[ind] === opt} onChange={handleChange}/>
                                 <label htmlFor={`ans${i + 1}q${ind + 1}`}>{opt}</label>
                                 <br />
-                            </div>
+                            </React.Fragment>
                         )
                     })
                 }
